@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "pandora-get-316011",
+  "private_key_id": "a0bdc0d9113412643845a1b43feed30d94d2d667",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCrbsonBDcokzLb\nw/znvv/KA4FpjiexckunB/VOkm+pNL8UE33ar/ed2sgYEaTBQa9hMZsVoGe7Qdb+\nzTv4rh9DLNlL3yaChMDA6BcD4aHXTyOHWv417Elgrds5X0nJpa+2dmeXazdLQy98\ngOPcLQ1DC5/4vp0LrmX8vAvK418BYv57tmoGp8ZJK9qGHWcrWPC8gsYfaSnD87z0\nwWZjNmTUHafNk+aFw12dA2fC6NvK7NPElgsWkxS4ROPxpwW4lKTzjGyf/V2YB0ff\nR4ORmixxPJfLhuIMc71f4d7zfll0Jr/DgtC6fZohgzL8CE7UqUNvA2SLVOcQ7Mlz\nszqa5hLhAgMBAAECggEAAvB2Wi7nUd8cOx+5drET/6m0Y/6XoveRC9RwxJ/GzFbm\n2SLwayR4kWX5PPhoeRZ1jwFjuv4yE8gwNdQyWAmG6FxHftaHpCs/MXoz6CbL4z4s\ndMX+9SZk/QReGDYQX3sOGonIgunIBpaopMYs908fxWuDRaeMV8aYtw7zq3nfMiMy\nMbt2EpWWfN51GcgwtXJJaYVE9tVujWPuKvO5eUyKOKPbplpUwwoUhsXgcb0GT5Ic\nLuheU0DyPqfytzXJu7nD6OIilhQM9QlvDkjKWx9KUlYUq8boBFQ5SUw2tbTeyTJQ\nityaQzyUoB7VK4Av4TNGN1BMRNut96JJbgOm8dtfdQKBgQDVriAzbQ0mjnoltXGe\nckYdNpzw8BlFC4ANuViB4MMv2Nu8jGuzrM7ElWOK9Z574IX1x9/AliH2bZyBmIG7\n9vBkKeA4PDTHhOmMjDD+tjJLXsHHKg+prDUa37cWmUEEH6qQa6PDpAYH7sedoyrV\nZ8CCHfNdaGnc/Rvyizb5apco+wKBgQDNYqnGWPqZGB15hqMqsdwuKmJrOPFCBIL5\nOepaNs8N1JXEx6eG6BqXd+0yoMH4zYYionGCtXaf3PQqV9DaiVS/xEVFu1nuTJdL\nJY7RH2DeCyxw+fVUpg5sYx6N5TugWGlCSd1tkg9pB6UwuWHBGixmghRznyu0pbfX\nET9bzeQk0wKBgF6vz2MactZgEm59TcDJoJo3Zio6Kuh2pSLvu/GpmLSuIwkVLHCt\nJd7k1/xuxPDd2F7GWDduD9S0U8L1wp95WKL6D3q76yNymU+Hm/py4CyX68SGtfQY\n9FtZQTeJZ88c/ScMG8CJAYcoX1pSQJvaYusFvJ7qsuaTXnwHBrBVdHBbAoGBAMdc\nsQ2uizoWFW5ESZgE44QQck5ADLeXZ4cCN8BwGVYEd4h2gOBL5pwGtkEBmKeo4D44\nTlShTk9pC70aVsn6qkAnBVLlxCqzP9yazWGiwsVmNTJI/2G2eqOtJxh3XgSMLUhC\nKOTV9Y1u9WMxX3kwrc6nD7EX3TXR8nyZ6lVzqrQvAoGBAJOWpjZUtXO16fOx5T9g\nNqeh6qcWjVJPs7lIu6+GkWgORFJlX1dT8NXY0l8z3vsWjgj4yMNrUcSOM/xxLeeP\nc+w8YnhiPgwvQjLozIcffVwJbmyTolM7zekoB/paeOiKp4DOi+GvNuvdNeFxG9N8\nOrw2OELRKfckwgR3P044yQQi\n-----END PRIVATE KEY-----\n",
+  "client_email": "bucket-access@pandora-get-316011.iam.gserviceaccount.com",
+  "client_id": "106755571703520165693",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/bucket-access%40pandora-get-316011.iam.gserviceaccount.com"
+}
