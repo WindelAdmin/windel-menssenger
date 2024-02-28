@@ -5,18 +5,18 @@ export default class WhatsappDocumentMessageDto {
   @ApiPropertyOptional({
     type: String,
     example: 'SQS12E23EWADA21WASASAS45A',
-    description: 'Whatsapp token',
+    description: 'Token da conta Whatsapp Bussiness na Meta',
   })
   @IsOptional()
   token: string;
 
   @ApiPropertyOptional({
     type: String,
-    example: '5599999999999',
-    description: 'Número de origem da mensagem',
+    example: '1115599999999999',
+    description: 'Número de identificação do telefone da conta Whatsapp Bussiness na Meta',
   })
   @IsOptional()
-  senderNumber: string;
+  senderIdentificationNumber: string;
 
   @ApiProperty({
     type: String,

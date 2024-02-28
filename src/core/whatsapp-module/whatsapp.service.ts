@@ -42,7 +42,7 @@ export default class WhatsappService {
     };
 
     try {
-      const axios = this.createAxios(data.token, data.senderNumber);
+      const axios = this.createAxios(data.token, data.senderIdentificationNumber);
       const response = await axios.post('messages', message);
 
       if (response.status === 200) {
@@ -76,7 +76,7 @@ export default class WhatsappService {
     });
 
     try {
-      const axios = this.createAxios(data.token, data.senderNumber);
+      const axios = this.createAxios(data.token, data.senderIdentificationNumber);
 
       const sendRecursive = async (index: number) => {
         const response = await axios.post('messages', messages[index]);
@@ -113,7 +113,7 @@ export default class WhatsappService {
       };
     })[0];
 
-    const axios = this.createAxios(data.token, data.senderNumber);
+    const axios = this.createAxios(data.token, data.senderIdentificationNumber);
 
     try {
       const response = await axios.post('messages', message);
