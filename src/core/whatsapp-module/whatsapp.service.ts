@@ -1,8 +1,8 @@
 import {
-    BadRequestException,
-    Injectable,
-    InternalServerErrorException,
-    UnauthorizedException,
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  UnauthorizedException,
 } from '@nestjs/common';
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import StorageService from '../storage-module/storage.service';
@@ -11,7 +11,7 @@ import WhatsappTextMessageDto from './dtos/whatsapp-text-message.dto';
 require('dotenv').config();
 
 const WINDEL_WHATSAPP_TOKEN = process.env.WINDEL_WHATSAPP_TOKEN;
-const WINDEL_WHATSAPP_NUMBER = process.env.WINDEL_WHATSAPP_NUMBER;
+const WINDEL_WHATSAPP_IDENTIFICATION_NUMBER = process.env.WINDEL_WHATSAPP_IDENTIFICATION_NUMBER;
 
 @Injectable()
 export default class WhatsappService {
@@ -19,7 +19,7 @@ export default class WhatsappService {
 
   createAxios(token: string, sender: string): AxiosInstance {
     const whatsappToken = token ? token : WINDEL_WHATSAPP_TOKEN;
-    const whatsappSender = sender ? sender : WINDEL_WHATSAPP_NUMBER;
+    const whatsappSender = sender ? sender : WINDEL_WHATSAPP_IDENTIFICATION_NUMBER;
 
     return axios.create({
       baseURL: `https://graph.facebook.com/v19.0/${whatsappSender}/`,
