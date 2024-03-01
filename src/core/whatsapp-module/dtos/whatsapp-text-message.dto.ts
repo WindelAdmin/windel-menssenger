@@ -16,7 +16,7 @@ export default class WhatsappTextMessageDto {
     description: 'Número de identificação do telefone da conta Whatsapp Bussiness na Meta',
   })
   @IsOptional()
-  senderIdentificationNumber: string;
+  identificationSenderNumber: string;
 
   @ApiProperty({
     type: String,

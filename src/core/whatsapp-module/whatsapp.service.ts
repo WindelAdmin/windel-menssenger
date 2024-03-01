@@ -1,8 +1,8 @@
 import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-  UnauthorizedException,
+    BadRequestException,
+    Injectable,
+    InternalServerErrorException,
+    UnauthorizedException,
 } from '@nestjs/common';
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import StorageService from '../storage-module/storage.service';
@@ -42,7 +42,7 @@ export default class WhatsappService {
     };
 
     try {
-      const axios = this.createAxios(data.token, data.senderIdentificationNumber);
+      const axios = this.createAxios(data.token, data.identificationSenderNumber);
       const response = await axios.post('messages', message);
 
       if (response.status === 200) {
@@ -76,7 +76,7 @@ export default class WhatsappService {
     });
 
     try {
-      const axios = this.createAxios(data.token, data.senderIdentificationNumber);
+      const axios = this.createAxios(data.token, data.identificationSenderNumber);
 
       const sendRecursive = async (index: number) => {
         const response = await axios.post('messages', messages[index]);
@@ -113,7 +113,7 @@ export default class WhatsappService {
       };
     })[0];
 
-    const axios = this.createAxios(data.token, data.senderIdentificationNumber);
+    const axios = this.createAxios(data.token, data.identificationSenderNumber);
 
     try {
       const response = await axios.post('messages', message);
