@@ -9,6 +9,7 @@ import {
 import { FilesInterceptor } from '@nestjs/platform-express';
 import ApiKeyAuthGuard from 'src/infra/apykey-auth.guard';
 import WhatsappDocumentMessageDto from './dtos/whatsapp-document-message.dto';
+import WhatsappSingleDocumentMessageDto from './dtos/whatsapp-single-document-message.dto';
 import WhatsappTextMessageDto from './dtos/whatsapp-text-message.dto';
 import WhatsappService from './whatsapp.service';
 
@@ -34,7 +35,7 @@ export default class WhatsappController {
   @Post('/single-document')
   @UseInterceptors(FilesInterceptor('files'))
   sendSingleDocumentMessage(
-    @Body() data: WhatsappDocumentMessageDto,
+    @Body() data: WhatsappSingleDocumentMessageDto,
     @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
     return this.whatsappService.sendSingleDocument(data, files[0]);

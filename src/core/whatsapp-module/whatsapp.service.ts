@@ -7,24 +7,18 @@ import {
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import StorageService from '../storage-module/storage.service';
 import WhatsappDocumentMessageDto from './dtos/whatsapp-document-message.dto';
+import WhatsappSingleDocumentMessageDto from './dtos/whatsapp-single-document-message.dto';
 import WhatsappTextMessageDto from './dtos/whatsapp-text-message.dto';
-require('dotenv').config();
-
-const WINDEL_WHATSAPP_TOKEN = process.env.WINDEL_WHATSAPP_TOKEN;
-const WINDEL_WHATSAPP_IDENTIFICATION_NUMBER = process.env.WINDEL_WHATSAPP_IDENTIFICATION_NUMBER;
 
 @Injectable()
 export default class WhatsappService {
   constructor(private readonly storageService: StorageService) {}
 
   createAxios(token: string, sender: string): AxiosInstance {
-    const whatsappToken = token ? token : WINDEL_WHATSAPP_TOKEN;
-    const whatsappSender = sender ? sender : WINDEL_WHATSAPP_IDENTIFICATION_NUMBER;
-
     return axios.create({
-      baseURL: `https://graph.facebook.com/v19.0/${whatsappSender}/`,
+      baseURL: `https://graph.facebook.com/v19.0/${sender}/`,
       headers: {
-        Authorization: `Bearer ${whatsappToken}`,
+        Authorization: `Bearer ${token}`,
       },
     });
   }
@@ -42,7 +36,10 @@ export default class WhatsappService {
     };
 
     try {
-      const axios = this.createAxios(data.token, data.identificationSenderNumber);
+      const axios = this.createAxios(
+        data.token,
+        data.senderIdentificationNumber,
+      );
       const response = await axios.post('messages', message);
 
       if (response.status === 200) {
@@ -58,11 +55,11 @@ export default class WhatsappService {
     files: Array<Express.Multer.File>,
   ): Promise<any> {
     const documents = await this.storageService.saveFiles(
-      files,
       'windel-storage',
+      files
     );
 
-    const messages = documents.map((doc) => {
+    const messages = documents.map((doc, index) => {
       return {
         messaging_product: 'whatsapp',
         recipient_type: 'individual',
@@ -70,13 +67,16 @@ export default class WhatsappService {
         type: 'document',
         document: {
           link: doc.url,
-          caption: doc.filename,
+          caption: data?.captions[index] ? data.captions[index] : doc.filename,
         },
       };
     });
 
     try {
-      const axios = this.createAxios(data.token, data.identificationSenderNumber);
+      const axios = this.createAxios(
+        data.token,
+        data.senderIdentificationNumber,
+      );
 
       const sendRecursive = async (index: number) => {
         const response = await axios.post('messages', messages[index]);
@@ -95,11 +95,15 @@ export default class WhatsappService {
   }
 
   async sendSingleDocument(
-    data: WhatsappDocumentMessageDto,
+    data: WhatsappSingleDocumentMessageDto,
     file: Express.Multer.File,
   ) {
+
     const message = (
-      await this.storageService.saveFiles([file], 'windel-storage')
+      await this.storageService.saveFiles(
+        'windel-storage',
+        [file]
+      )
     ).map((doc) => {
       return {
         messaging_product: 'whatsapp',
@@ -108,12 +112,13 @@ export default class WhatsappService {
         type: 'document',
         document: {
           link: doc.url,
-          caption: data?.caption ? data.caption : doc.filename,
+          caption: data.caption || '',
+          filename: data.filename || doc.filename
         },
       };
     })[0];
 
-    const axios = this.createAxios(data.token, data.identificationSenderNumber);
+    const axios = this.createAxios(data.token, data.senderIdentificationNumber);
 
     try {
       const response = await axios.post('messages', message);
@@ -128,17 +133,19 @@ export default class WhatsappService {
 
   thowHttpException(error: AxiosError): Error {
     if (error.response.status === 400) {
-      return new BadRequestException(error.message);
+      return new BadRequestException('Verifique os dados fornecidos.');
     }
 
     if (error.response.status === 401) {
       return new UnauthorizedException(
-        'O Token da Meta que foi fornecido é inválido',
+        'O Token ou Número de Identificação do telefone da Meta que foi fornecido são(é) inválido(s)',
       );
     }
 
     if (error.response.status === 500) {
-      return new InternalServerErrorException(error.message);
+      return new InternalServerErrorException(
+        'Ocorreu algum erro interno no servidor.',
+      );
     }
   }
 }

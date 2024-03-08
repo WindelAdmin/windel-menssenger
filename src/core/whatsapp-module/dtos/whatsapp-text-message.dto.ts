@@ -1,22 +1,22 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
 export default class WhatsappTextMessageDto {
-  @ApiPropertyOptional({
+  @ApiProperty({
     type: String,
     example: 'SQS12E23EWADA21WASASAS45A',
     description: 'Token da conta Whatsapp Bussiness na Meta',
   })
-  @IsOptional()
+  @IsNotEmpty({ message: 'Campo token é obrigatório.' })
   token: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     type: String,
     example: '5599999999999',
     description: 'Número de identificação do telefone da conta Whatsapp Bussiness na Meta',
   })
-  @IsOptional()
-  identificationSenderNumber: string;
+  @IsNotEmpty({ message: 'Campo  senderIdentificationNumber é obrigatório.' })
+  senderIdentificationNumber: string;
 
   @ApiProperty({
     type: String,
