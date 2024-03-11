@@ -127,7 +127,8 @@ export default class WhatsappService {
         return response.data;
       }
     } catch (err) {
-      throw this.thowHttpException(err);
+      const errAxios = err as AxiosError;
+      throw this.thowHttpException(errAxios);
     }
   }
 

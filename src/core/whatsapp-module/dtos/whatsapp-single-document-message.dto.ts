@@ -1,8 +1,8 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional } from 'class-validator';
 
 export default class WhatsappSingleDocumentMessageDto {
-  @ApiPropertyOptional({
+  @ApiProperty({
     type: String,
     example: 'SQS12E23EWADA21WASASAS45A',
     description: 'Token da conta Whatsapp Bussiness na Meta',
@@ -10,7 +10,7 @@ export default class WhatsappSingleDocumentMessageDto {
   @IsNotEmpty({ message: 'Campo token é obrigatório.' })
   token: string;
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     type: String,
     example: '1115599999999999',
     description: 'Número de identificação do telefone da conta Whatsapp Bussiness na Meta',
@@ -34,7 +34,7 @@ export default class WhatsappSingleDocumentMessageDto {
   @IsNotEmpty({ message: 'Campo filename é obrigatório.' })
   filename: string
 
-  @ApiPropertyOptional({
+  @ApiProperty({
     type: String,
     example: 'Pedido Nº 2',
     description: 'Legenda para o arquivo',
