@@ -16,7 +16,7 @@ export default class WhatsappService {
 
   createAxios(token: string, sender: string): AxiosInstance {
     return axios.create({
-      baseURL: `https://graph.facebook.com/v19.0/${sender}/`,
+      baseURL: `https://graph.facebook.com/v18.0/${sender}/`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -24,13 +24,17 @@ export default class WhatsappService {
   }
 
   async sendText(data: WhatsappTextMessageDto): Promise<any> {
+    console.log(data);
+
     const message = {
       messaging_product: 'whatsapp',
-      recipient_type: 'individual',
       to: data.destinationNumber,
       type: 'text',
+      language: {
+        code: 'pt_BR',
+      },
       text: {
-        preview_url: true,
+        preview_url: false,
         body: data.text,
       },
     };
@@ -46,6 +50,8 @@ export default class WhatsappService {
         return response.data;
       }
     } catch (err) {
+      console.log(err.response.data);
+
       throw this.thowHttpException(err);
     }
   }
@@ -56,14 +62,16 @@ export default class WhatsappService {
   ): Promise<any> {
     const documents = await this.storageService.saveFiles(
       'windel-storage',
-      files
+      files,
     );
 
     const messages = documents.map((doc, index) => {
       return {
         messaging_product: 'whatsapp',
-        recipient_type: 'individual',
         to: data.destinationNumber,
+        language: {
+          code: 'pt_BR',
+        },
         type: 'document',
         document: {
           link: doc.url,
@@ -98,22 +106,20 @@ export default class WhatsappService {
     data: WhatsappSingleDocumentMessageDto,
     file: Express.Multer.File,
   ) {
-
     const message = (
-      await this.storageService.saveFiles(
-        'windel-storage',
-        [file]
-      )
+      await this.storageService.saveFiles('windel-storage', [file])
     ).map((doc) => {
       return {
         messaging_product: 'whatsapp',
-        recipient_type: 'individual',
+        language: {
+          code: 'pt_BR',
+        },
         to: data.destinationNumber,
         type: 'document',
         document: {
           link: doc.url,
           caption: data.caption || '',
-          filename: data.filename || doc.filename
+          filename: data.filename || doc.filename,
         },
       };
     })[0];
