@@ -19,6 +19,7 @@ export default class WhatsappService {
       baseURL: `https://graph.facebook.com/v18.0/${sender}/`,
       headers: {
         Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
       },
     });
   }
