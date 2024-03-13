@@ -25,17 +25,17 @@ export default class WhatsappService {
   }
 
   async sendText(data: WhatsappTextMessageDto): Promise<any> {
-
     const message = {
       messaging_product: 'whatsapp',
       to: data.destinationNumber,
-      type: 'template',
-      template: {
-        name: 'integration'
-      },
+      type: 'text',
       language: {
         code: 'pt_BR',
-      }
+      },
+      text: {
+        preview_url: false,
+        body: data.text,
+      },
     };
 
     try {
