@@ -26,13 +26,30 @@ export default class WhatsappDocumentMessageDto {
   @IsNotEmpty({ message: 'Campo destinationNumber é obrigatório.' })
   destinationNumber: string;
 
-  @ApiPropertyOptional({
-    type: String,
-    example: 'Pedido Nº 2',
-    description: 'Legenda para o arquivo',
+  @ApiProperty({
+    type: Object,
+    example: [
+       {
+      customerName: 'João da Silva',
+      typeDocumentName: 'Tipo de documento'
+    },
+     {
+      customerName: 'Nome do cliente',
+      typeDocumentName: 'Tipo de documento'
+    }
+    ],
+    description: 'Parâmetros do corpo da mensagem',
   })
-  @IsOptional()
-  captions?: string;
+  parameters: {
+    customerName: string,
+    typeDocumentNameList: string[]
+  }
 
-
+  @ApiProperty({
+    type: String,
+    example: '5588888888888',
+    description: 'Número de destino da mensagem',
+  })
+  @IsOptional({ message: 'Campo destinationNumber é obrigatório.' })
+  filenameList?: string[]
 }

@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsNotEmpty } from 'class-validator';
 
 export default class WhatsappSingleDocumentMessageDto {
   @ApiProperty({
@@ -35,12 +36,17 @@ export default class WhatsappSingleDocumentMessageDto {
   filename: string
 
   @ApiProperty({
-    type: String,
-    example: 'Pedido Nº 2',
-    description: 'Legenda para o arquivo',
+    type: Object,
+    example: {
+      customerName: 'Nome do cliente',
+      typeDocumentName: 'Tipo de documento'
+    },
+    description: 'Parâmetros do corpo da mensagem',
   })
-  @IsOptional()
-  caption?: string;
-
-
+  @IsNotEmpty({ message: 'Campo parameters é obrigatório.' })
+  @Transform(({ value }) => JSON.parse(value))
+  parameters: {
+    customerName: string,
+    typeDocumentName: string
+  }
 }

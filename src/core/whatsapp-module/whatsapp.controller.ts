@@ -38,6 +38,8 @@ export default class WhatsappController {
     @Body() data: WhatsappSingleDocumentMessageDto,
     @UploadedFiles() files: Array<Express.Multer.File>,
   ) {
+    console.log(data);
+    
     return this.whatsappService.sendSingleDocument(data, files[0]);
   }
 }

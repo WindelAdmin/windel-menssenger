@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import axios, { AxiosError, AxiosInstance } from 'axios';
 import StorageService from '../storage-module/storage.service';
+import { TEMPLATE_INTEGRATION_TEST } from './consts/template';
 import WhatsappDocumentMessageDto from './dtos/whatsapp-document-message.dto';
 import WhatsappSingleDocumentMessageDto from './dtos/whatsapp-single-document-message.dto';
 import WhatsappTextMessageDto from './dtos/whatsapp-text-message.dto';
@@ -28,13 +29,12 @@ export default class WhatsappService {
     const message = {
       messaging_product: 'whatsapp',
       to: data.destinationNumber,
-      type: 'text',
-      language: {
-        code: 'pt_BR',
-      },
-      text: {
-        preview_url: false,
-        body: data.text,
+      type: 'template',
+      template: {
+        name: TEMPLATE_INTEGRATION_TEST,
+        language: {
+          code: 'pt_BR',
+        },
       },
     };
 
@@ -68,14 +68,40 @@ export default class WhatsappService {
       return {
         messaging_product: 'whatsapp',
         to: data.destinationNumber,
-        language: {
-          code: 'pt_BR',
-        },
-        type: 'document',
-        document: {
-          link: doc.url,
-          caption: data?.captions[index] ? data.captions[index] : doc.filename,
-        },
+        type: 'template',
+        template: {
+          name: 'document',
+          language: {
+            code: 'pt_BR',
+          },
+          components: [
+            {
+              type: 'header',
+                parameters: [
+                {
+                  type: 'document',
+                  document: {
+                      link: doc.url,
+                      filename: data?.filenameList[index] || doc.filename,
+                    },
+                },
+              ]
+            },
+            {
+              type: 'body',
+              parameters: [
+                {
+                  type: 'text',
+                  text: data.parameters.customerName,
+                },
+                 {
+                  type: 'text',
+                  text: data.parameters.typeDocumentNameList[index],
+                },
+              ],
+            },
+          ],
+        }
       };
     });
 
@@ -110,16 +136,41 @@ export default class WhatsappService {
     ).map((doc) => {
       return {
         messaging_product: 'whatsapp',
-        language: {
-          code: 'pt_BR',
-        },
         to: data.destinationNumber,
-        type: 'document',
-        document: {
-          link: doc.url,
-          caption: data.caption || '',
-          filename: data.filename || doc.filename,
-        },
+        type: 'template',
+        template: {
+          name: 'document',
+          language: {
+            code: 'pt_BR',
+          },
+          components: [
+            {
+              type: 'header',
+                parameters: [
+                {
+                  type: 'document',
+                  document: {
+                      link: doc.url,
+                      filename: data.filename || doc.filename,
+                    },
+                },
+              ]
+            },
+            {
+              type: 'body',
+              parameters: [
+                {
+                  type: 'text',
+                  text: data.parameters.customerName,
+                },
+                 {
+                  type: 'text',
+                  text: data.parameters.typeDocumentName,
+                },
+              ],
+            },
+          ],
+        }
       };
     })[0];
 
@@ -127,12 +178,14 @@ export default class WhatsappService {
 
     try {
       const response = await axios.post('messages', message);
+      console.log(response.data);
 
       if (response.status === 200) {
         return response.data;
       }
     } catch (err) {
       const errAxios = err as AxiosError;
+      console.log(errAxios.response.data);
       throw this.thowHttpException(errAxios);
     }
   }
